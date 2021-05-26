@@ -6,7 +6,8 @@
         <div v-for="log in logs" v-bind:key="log.id" class="card">
             <div class="card-body">
                 <p>{{ log.content }}</p>
-                <button class="btn btn-danger" v-on:click="delete(log.id);">削除</button>
+                <button class="btn btn-primary" @click="use(log.content)">検索</button>
+                <button class="btn btn-danger" @click="del">削除</button>
             </div>
         </div>
     </div>
@@ -61,9 +62,17 @@ export default {
     },
 
     methods: {
-        delete(id) {
-            this.logs[id].content = "まんち！";
+
+        del() {
+            //this.logs = this.logs.slice(0, 1);
+            this.logs.push({id: 5, content: "amamamam"})
+        },
+
+        use(content) {
+            /* 第一引数に親の関数を割り当てたカスタムイベント名 第二以降の引数に親の関数に渡す値 */
+            this.$emit("parent-event", content);
         }
+
     }
 
 }
