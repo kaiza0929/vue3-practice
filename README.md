@@ -8,3 +8,5 @@ npm run serve<br>
 ・pip install "gensim==3.8.1" (最新バージョンだとモデルが読み込めないエラー)<br>
 ・yagiモデルは.pyファイルもモデルファイルと同じ場所に設置が必要<br>
 ・兄弟コンポーネントどうしで直接通信は行わず、それらの親が仲介する<br>
+・vuexのインストールはnpm install vuex@4.0.1<br>
+・computedは計算 methodsは入力などのイベント発生時の処理という使い分け<br>

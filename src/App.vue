@@ -41,7 +41,7 @@ export default {
     call_other_child_func(content) {
       //this.$refs.child_main.post(content);
       /* vue3からはプロキシオブジェクトが返る*/
-      console.log(this.$refs.child_main, content);
+      this.$refs.child_main.post(content);
     }
   } 
 

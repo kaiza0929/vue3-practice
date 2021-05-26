@@ -1,4 +1,6 @@
 import { createApp } from "vue";
-import App from "./App.vue"
+import App from "./App.vue";
+/* index.jsではなくstoreディレクトリを指定 */
+import store from "./store"
 
-createApp(App).mount("#app");
+createApp(App).use(store).mount("#app");

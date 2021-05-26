@@ -3,12 +3,20 @@
         <div>
             <p>テストログ</p>
         </div>
-        <div v-for="log in logs" v-bind:key="log.id" class="card">
-            <div class="card-body">
-                <p>{{ log.content }}</p>
-                <button class="btn btn-primary" @click="use(log.content)">検索</button>
-                <button class="btn btn-danger" @click="del">削除</button>
+        <div v-if="logs.length > 0">
+            <div v-for="log in logs" v-bind:key="log.id" class="card">
+                <div class="card-body">
+                    <p>{{ log.content }}</p>
+                    <button class="btn btn-primary" @click="use(log.content)">検索</button>
+                    <button class="btn btn-danger" @click="del(log.id)">削除</button>
+                </div>
             </div>
+        </div>
+        <div v-else-if="logs.length == 0 && this.$store.state.is_login == false">
+            <p>テストログを閲覧するにはログインしてください</p>
+        </div>
+        <div v-else>
+            <p>テストログが存在しません</p>
         </div>
     </div>
 </template>
@@ -42,14 +50,12 @@ div#sidebar_area {
 
 export default {
 
-    /* logs: []だとbeforeCreate()で取得したデータが消える */
-    /* this.logs = logs -> logs: [](this.data.logs = []の意味)の順に実行されている? */
     data () {
-        return {}
+        return {logs: []}
     },
 
-    beforeCreate() {
-
+    mounted() {
+        /*
         var logs = [
             {id: 1, content: "ユーザーIDもパスワードも入力せずにログインボタンを押した。"},
             {id: 2, content: "ユーザーIDは入力せずパスワードのみ入力してログインボタンを押した。"},
@@ -58,14 +64,13 @@ export default {
         ];
 
         this.logs = logs;
-
+        */
     },
 
     methods: {
 
-        del() {
-            //this.logs = this.logs.slice(0, 1);
-            this.logs.push({id: 5, content: "amamamam"})
+        del(id) {
+            this.logs = this.logs.filter((log) => log.id != id);
         },
 
         use(content) {
