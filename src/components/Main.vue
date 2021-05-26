@@ -46,7 +46,6 @@ export default {
             axios.post("http://localhost:8000/similar-words", {content: content})
             .then((res) => {
                 this.similar_words = res.data.similar_words;
-                
             })
             .catch((err) => alert(err));
         }

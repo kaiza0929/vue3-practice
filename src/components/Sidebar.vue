@@ -12,7 +12,7 @@
                 </div>
             </div>
         </div>
-        <div v-else-if="logs.length == 0 && this.$store.state.is_login == false">
+        <div v-else-if="logs.length == 0 && (this.$store.state.user_id == null || this.$store.state.password == null)">
             <p>テストログを閲覧するにはログインしてください</p>
         </div>
         <div v-else>

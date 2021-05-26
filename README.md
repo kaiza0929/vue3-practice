@@ -1,5 +1,7 @@
 sudo sysctl fs.inotify.max_user_watches=400000<br>
 npm run serve<br>
+create table users (id String primary key, name String, password String);<br>
+insert into users (id, name, password) values ("@test1", "テストユーザー1", "password");<br>
 「アプリと直接関係がないもの」フォルダの中身 -> Proxyオブジェクトに関する内容<br><br>
 
 メモ<br>
@@ -10,3 +12,4 @@ npm run serve<br>
 ・兄弟コンポーネントどうしで直接通信は行わず、それらの親が仲介する<br>
 ・vuexのインストールはnpm install vuex@4.0.1<br>
 ・computedは計算 methodsは入力などのイベント発生時の処理という使い分け<br>
+・vuexを使わない兄弟コンポーネント間での通信についてはno-vuexブランチを参照<br>
