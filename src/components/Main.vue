@@ -1,9 +1,12 @@
 <template>
     <div id="main_area">
         <div class="mb-3">
-            <label for="exampleFormControlTextarea1" class="form-label">実行したテスト内容</label>
+            <h2>実行したテスト内容</h2>
             <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" cols="20" placeholder="例) 数量欄に0を入力してからカートに入れるボタンを押した。" v-model="content"></textarea>
-            <button class="btn btn-primary" @click="post">テスト内容を送信</button>
+            <p class="parallel_buttons">
+                <button class="btn btn-primary" @click="post()">テスト内容を送信</button>
+                <button v-if="this.$store.state.user_id != null && this.$store.state.name != null" class="btn btn-secondary" @click="save">ログとして保存</button>
+            </p>
         </div>
         <div>
             <div>
@@ -41,14 +44,20 @@ export default {
     },
 
     methods: {
+
         /* 親からの呼び出しの際は引数あり 自身からの呼び出しの際は引数なし(自身が持つ値を使う) */
         post(content = this.content) {
-            axios.post("http://localhost:8000/similar-words", {content: content})
-            .then((res) => {
-                this.similar_words = res.data.similar_words;
-            })
+            axios.get(`http://localhost:8000/new-test?content=${content}`)
+            .then((res) => this.similar_words = res.data.similar_words)
+            .catch((err) => alert(err));
+        }, 
+
+        save() {
+            axios.post("http://localhost:8000/logs", {user_id: this.$store.state.user_id, log_id: Math.random().toString(32).substring(2), content: this.content})
+            .then((res) => alert(JSON.stringify(res)))
             .catch((err) => alert(err));
         }
+
     }
 
 }

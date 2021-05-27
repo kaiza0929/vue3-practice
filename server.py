@@ -29,11 +29,33 @@ def login():
     else:
         return Response(status = 500)
 
-@app.route("/similar-words", methods=["POST"])
+
+@app.route("/logs", methods=["GET", "POST", "DELETE"])
+def use_logs():
+
+    if request.method == "GET":
+        query = request.args.get("user_id")
+        #(要素, )で要素が1つだけのタプル
+        cursor.execute("select logs.log_id, logs.content from logs where user_id = ?", (query, ))
+        return Response(response = json.dumps({"logs": [{"log_id": row[0], "content": row[1]} for row in cursor.fetchall()]}), status = 200)
+    elif request.method == "POST":
+        body = json.loads(request.get_data().decode("utf-8"))
+        cursor.execute("insert into logs (user_id, log_id, content) values (?, ?, ?)", (body["user_id"], body["log_id"], body["content"]))
+        connect.commit()
+        return Response(status = 200)
+    elif request.method == "DELETE":
+        cursor.execute("delete from logs where log_id = ?", (json.loads(request.get_data().decode("utf-8"))["log_id"], ))
+        connect.commit()
+        return Response(status = 200)
+    else:
+        return Response(status = 400) #メソッドが正しくない
+
+
+@app.route("/new-test", methods=["GET"])
 def get_new_test():
 
-    body = request.get_data().decode("utf-8")
-    tokens = [token.surface for token in t.tokenize(json.loads(body)["content"]) if token.part_of_speech.split(",")[0] == "名詞"]
+    query = request.args.get("content")
+    tokens = [token.surface for token in t.tokenize(query) if token.part_of_speech.split(",")[0] in ["名詞", "動詞"]]
     similar_words = []
 
     for token in tokens:
@@ -44,3 +66,4 @@ def get_new_test():
 
 if __name__ == "__main__":
     app.run(port = 8000)
+    

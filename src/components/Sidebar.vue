@@ -1,18 +1,18 @@
 <template>
     <div id="sidebar_area">
         <div>
-            <p>テストログ</p>
+            <h2>テストログ</h2>
         </div>
-        <div v-if="logs.length > 0">
-            <div v-for="log in logs" v-bind:key="log.id" class="card">
+        <div v-if="this.$store.state.user_id != null && this.$store.state.name != null && logs.length > 0">
+            <div v-for="log in logs" v-bind:key="log.log_id" class="card">
                 <div class="card-body">
                     <p>{{ log.content }}</p>
-                    <button class="btn btn-primary" @click="use(log.content)">検索</button>
-                    <button class="btn btn-danger" @click="del(log.id)">削除</button>
+                    <button class="btn btn-primary" @click="use(log.content)">ログを送信</button>
+                    <button class="btn btn-danger" @click="del(log.log_id)">ログを削除</button>
                 </div>
             </div>
         </div>
-        <div v-else-if="logs.length == 0 && (this.$store.state.user_id == null || this.$store.state.password == null)">
+        <div v-else-if="this.$store.state.user_id == null || this.$store.state.name == null">
             <p>テストログを閲覧するにはログインしてください</p>
         </div>
         <div v-else>
@@ -26,10 +26,15 @@
 div#sidebar_area {
     display: flex;
     flex-flow: column;
+    width: 600px; /* 幅固定 */
+    margin-left: 2%;
+    margin-right: 3%;
+    padding: 2%;
+    border: solid;
 }
 
 .card {
-    margin-bottom: 1%;
+    margin-bottom: 2%;
 }
 
 /* マウスが乗った時 */
@@ -46,7 +51,7 @@ div#sidebar_area {
 
 <script>
 
-//import axios from "axios"
+import axios from "axios"
 
 export default {
 
@@ -54,28 +59,25 @@ export default {
         return {logs: []}
     },
 
-    mounted() {
-        /*
-        var logs = [
-            {id: 1, content: "ユーザーIDもパスワードも入力せずにログインボタンを押した。"},
-            {id: 2, content: "ユーザーIDは入力せずパスワードのみ入力してログインボタンを押した。"},
-            {id: 3, content: "パスワードは入力せずユーザーIDのみ入力してログインボタンを押した。"},
-            {id: 4, content: "ユーザーIDとパスワードを入力してからログインボタンを押した。"}
-        ];
-
-        this.logs = logs;
-        */
-    },
+    mounted() {},
 
     methods: {
 
-        del(id) {
-            this.logs = this.logs.filter((log) => log.id != id);
+        set() {
+            axios.get(`http://localhost:8000/logs?user_id=${this.$store.state.user_id}`)
+            .then((res) => this.logs = res.data.logs)
+            .catch((err) => alert(err));
+        },
+
+        del(log_id) {
+            axios.delete(`http://localhost:8000/logs`, {data: {log_id: log_id}})
+            .then(() => this.logs = this.logs.filter((log) => log.log_id != log_id))
+            .catch((err) => alert(err));
         },
 
         use(content) {
             /* 第一引数に親の関数を割り当てたカスタムイベント名 第二以降の引数に親の関数に渡す値 */
-            this.$emit("parent-event", content);
+            this.$emit("parent-event", {key: "POSTCONTENT", payload: content});
         }
 
     }
