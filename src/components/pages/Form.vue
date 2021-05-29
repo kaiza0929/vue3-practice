@@ -1,5 +1,6 @@
 <template>
-    <textarea></textarea> <!--v-modelをどうするか -->
+    <h2>テストログの追加</h2>
+    <textare></textare>
 </template>
 
 <script>
