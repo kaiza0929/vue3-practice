@@ -5,10 +5,14 @@
             <div class="container-fluid">
                 <h1 class="navbar-brand mb-0 h1" id="title">テスト提案ツール</h1>
                 <div>
-                    <router-link to="/">テストログの表示</router-link>
+                    <router-link to="/" style="">テストログの表示</router-link>
                     <router-link to="/new">テストログの追加</router-link>
                 </div>
             </div>
         </nav>
     </div> 
 </template>
+
+<style> 
+
+</style>

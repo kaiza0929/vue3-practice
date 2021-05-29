@@ -1,12 +1,25 @@
 <template>
-    <h2>テストログの追加</h2>
-    <div>
-        <input type="text" v-model="title" /> 
-        <textarea v-model="content"></textarea>
-        <textarea v-model="result"></textarea>
+    <div style="background: white; margin: 2%; padding: 1.5%;">
+        <h2>テストログの追加</h2>
+        <div class="form-group">
+            <label for="exampleFormControlInput1">タイトル</label>
+            <input type="text" class="form-control" id="exampleFormControlInput1" v-model="title"> 
+        </div>
+        <div class="form-group">
+            <label for="exampleFormControlTextarea1">実行したテスト内容</label>
+            <textarea v-model="content" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="exampleFormControlTextarea1">テスト結果</label>
+            <textarea v-model="resyult" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+        </div>
         <button class="btn btn-primary" @click="post">送信</button> 
     </div>
 </template>
+
+<style>
+
+</style>
 
 <script>
 
