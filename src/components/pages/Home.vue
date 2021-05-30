@@ -1,8 +1,10 @@
 <template>
-    <div style="margin: 6%;">
+    <div style="margin-left: 9%;">
         <div style="text-align: center;">
-            <h2>テストログ</h2>
-            <p><label style="margin-right: 1%">絞り込み検索</label><input type="text" v-model="keyword" /></p>
+            <h2 style="margin-bottom: 3%; margin-right: 10%;">テストログ</h2>
+            <div class="form-group" style="margin-left: 2.5%;">
+                <input type="text" class="form-control" placeholder="キーワードで絞り込み" id="exampleFormControlInput1" v-model="keyword" style="width: 68em;" /> 
+            </div>
         </div>
         <div style="display: flex; flex-wrap: wrap;">
             <!-- v-forを記述したタグにflexの設定をしても効かない flexの設定をした別のタグで囲む -->

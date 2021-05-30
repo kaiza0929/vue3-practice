@@ -1,29 +1,42 @@
 <template>
     <div style="margin: 2%; display: flex">
-        <div>
-            <div class="card" style="width: 20rem; padding: 2%;">
-                <div class="card_body">
-                    <h3 class="card-title">{{ title }}</h3>
-                    <p class="card-text">{{"[テスト内容]: " + content }}</p>
-                    <p class="card-text">{{"[結果]: " + result }}</p>
-                    <p style="display: flex;">
-                        <button class="btn btn-primary" style="margin-right: 1%;" @click="use(content)">類似ケースを取得</button>
-                        <button class="btn btn-danger" @click="del(log_id)">ログを削除</button>
-                    </p>
-                </div>
+        <div class="card" style="height: 3%;">
+            <div class="card_body">
+                <h3 class="card-title">{{ title }}</h3>
+                <p class="card-text">{{"[テスト内容]: " + content }}</p>
+                <p class="card-text" style="margin-bottom: 5%;">{{"[結果]: " + result }}</p>
+                <p style="display: flex; text-align: center;">
+                    <button class="btn btn-primary" @click="use(content)">類似ケースを取得</button>
+                    <button class="btn btn-danger" @click="del(log_id)">ログを削除</button>
+                    <button class="btn btn-secondary" @click="this.$router.push('/')">ログ選択画面に戻る</button>
+                </p>
             </div>
-            <button class="btn btn-secondary" @click="this.$router.push('/')">ログ選択画面に戻る</button>
         </div>
-        <div style="background: white;">
-            <p>提案されたテスト観点</p>
-            <p></p>
-            <p>関連するキーワード</p>
-            <div v-for="obj in similar_words" v-bind:key="obj.word">
-                <p>{{ obj.similar_words.join(" ") }}</p>
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title">提案されたテスト観点</h3>
+                <h3>関連するキーワード</h3>
+                <div class="card-title" v-for="obj in similar_words" v-bind:key="obj.word">
+                    <p>{{ obj.similar_words.join(" ") }}</p>
+                </div>
             </div>
         </div>
     </div>
 </template>
+
+<style> 
+
+.card {
+    width: 40rem; 
+    margin-right: 3%;
+    padding: 3%;
+}
+
+button {
+    margin-right: 1%;
+}
+
+</style>
 
 <script>
 

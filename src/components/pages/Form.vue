@@ -13,7 +13,7 @@
             <label for="exampleFormControlTextarea1">テスト結果</label>
             <textarea v-model="resyult" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
         </div>
-        <button class="btn btn-primary" @click="post">送信</button> 
+        <button style="margin-left: 94%;" class="btn btn-primary" @click="post">送信</button> 
     </div>
 </template>
 
